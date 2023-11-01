@@ -141,7 +141,7 @@ app.get('/employeedetail/:id', async (req, res) => {
         res.status(404).json({ Error: 'Employee not found' });
         return;
       }
-    //   console.log(employee1)
+      console.log(employee1)
       res.json({ Status: 'Success', Result: employee1 });
     } catch (err) {
       res.json({ Error: 'Get employee error in MongoDB' });
@@ -395,8 +395,9 @@ app.post('/create', upload.single('image'), async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     const address = req.body.address;
-    const salary = req.body.salary;
-    const image = req.body.filename;
+    const salary = parseInt(req.body.salary);
+    const image = req.file.filename;
+    const id = parseInt(req.body.id);
   
     // Hash the password.
     const hash = await bcrypt.hash(password, 10);
@@ -409,6 +410,7 @@ app.post('/create', upload.single('image'), async (req, res) => {
       address,
       salary,
       image,
+      id
     };
   
     // Save the employee document to the database.
